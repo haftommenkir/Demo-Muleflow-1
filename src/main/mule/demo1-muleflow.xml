@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="bd8e878b-5d3d-4058-b1cd-7cdaf938d643" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="mainflow" doc:id="233aad0f-60cd-4552-9c6d-c50104d6c1fc" >
+		<http:listener doc:name="Listener" doc:id="12ee1fd9-8608-48d8-89fa-2405cd16753d" config-ref="HTTP_Listener_config" path="/flow"/>
+		<flow-ref doc:name="Flow Reference -2021" doc:id="b86d3dfe-772b-47bb-b1fc-3a99376b49a0" name="Brzaf"/>
+	</flow>
+	<sub-flow name="Brzaf" doc:id="2d50b979-deed-4a36-b481-480cd8ff6970" >
+		<ee:transform doc:name="Transform Message" doc:id="a58647e9-de18-440d-a876-05d8e705cb46" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	'Brzaf':"I'm so fine! Thanks!"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<flow name="privateflow" doc:id="877265f3-9ace-4b81-81fe-3c187dc49276" >
+		<ee:transform doc:name="Transform Message" doc:id="d56677da-6b57-4644-bfa0-2b47b04cc0d4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	'Haftom':"Good Morning Mearey!"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
